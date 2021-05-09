@@ -31,11 +31,8 @@ if (index.shift === undefined) {
         if (index.output === undefined) {
             process.stdout.write(caesar(line, index.shift, index.action) + '\n');
         } else {
-            let readableStream = fs.createReadStream(index.output, "utf8");
-            readableStream.on("data", function(str){
-                let writeableStream = fs.createWriteStream(index.output);
-                writeableStream.write(str + caesar(line, index.shift, index.action));
-            });
+            let writeableStream = fs.createWriteStream(index.output, {flags: 'a'});
+            writeableStream.write(caesar(line, index.shift, index.action));
         }
     });
 } else {
@@ -44,11 +41,8 @@ if (index.shift === undefined) {
         if (index.output === undefined) {
             process.stdout.write(caesar(chunk, index.shift, index.action) + '\n');
         } else {
-            let readableStream = fs.createReadStream(index.output, "utf8");
-            readableStream.on("data", function(str){
-                let writeableStream = fs.createWriteStream(index.output);
-                writeableStream.write(str + caesar(chunk, index.shift, index.action));
-            });
+            let writeableStream = fs.createWriteStream(index.output, {flags: 'a'});
+            writeableStream.write(caesar(chunk, index.shift, index.action));
         }
     });
 }
